@@ -32,6 +32,15 @@ body {
     margin: 0 auto;
 }
 
+.app-title {
+    text-align: center;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    color: var(--text-secondary);
+    margin: 0;
+}
+
 /* Image Zone - Header */
 .image-zone {
     display: flex;
