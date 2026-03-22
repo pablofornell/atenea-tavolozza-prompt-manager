@@ -144,23 +144,40 @@ def _copy_macos(text, image_paths):
 
 
 def _copy_linux(text, image_paths):
-    """Copy to clipboard on Linux using xclip."""
+    """Copy to clipboard on Linux using xclip with MIME types."""
+    from PIL import Image
+    import io
+
     try:
-        # Copy text
+        # If we have text, always copy text (priority for prompt engineering)
         if text:
             process = subprocess.Popen(
                 ['xclip', '-selection', 'clipboard'],
                 stdin=subprocess.PIPE
             )
             process.communicate(text.encode('utf-8'))
-        
-        # Copy image (if xclip supports it)
-        if image_paths and not text:
-            subprocess.run([
-                'xclip', '-selection', 'clipboard',
-                '-t', 'image/png', '-i', image_paths[0]
-            ], check=True)
-        
+
+            if image_paths:
+                return {
+                    'success': True,
+                    'warning': f'Text copied. {len(image_paths)} image(s) need to be uploaded manually.'
+                }
+            return {'success': True}
+
+        # Copy image only if no text
+        if image_paths:
+            img = Image.open(image_paths[0])
+            png_buffer = io.BytesIO()
+            img.convert('RGBA').save(png_buffer, format='PNG')
+            png_data = png_buffer.getvalue()
+
+            process = subprocess.Popen(
+                ['xclip', '-selection', 'clipboard', '-t', 'image/png'],
+                stdin=subprocess.PIPE
+            )
+            process.communicate(png_data)
+            return {'success': True}
+
         return {'success': True}
     except FileNotFoundError:
         return {'success': False, 'error': 'xclip not installed. Install with: sudo apt install xclip'}
