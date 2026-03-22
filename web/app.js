@@ -43,6 +43,8 @@ async function handleAddImages() {
  * Render an image thumbnail in the header
  */
 function renderImageThumbnail(imageData) {
+    const index = imageStore.length;
+
     const div = document.createElement('div');
     div.className = 'image-thumbnail';
     div.dataset.path = imageData.path;
@@ -57,8 +59,14 @@ function renderImageThumbnail(imageData) {
     removeBtn.title = 'Remove image';
     removeBtn.addEventListener('click', () => removeImage(imageData.path, div));
 
+    const label = document.createElement('input');
+    label.type = 'text';
+    label.className = 'image-label';
+    label.value = `IMG_${index}`;
+
     div.appendChild(img);
     div.appendChild(removeBtn);
+    div.appendChild(label);
     imageList.appendChild(div);
 }
 
@@ -76,17 +84,12 @@ function removeImage(path, element) {
 /**
  * Add a new text block to the prompt zone
  */
-function addTextBlock(placeholder = 'Write your prompt here...') {
-    const blockCount = textBlocks.children.length;
-    
+function addTextBlock() {
     const div = document.createElement('div');
     div.className = 'text-block';
 
     const textarea = document.createElement('textarea');
-    textarea.placeholder = blockCount === 0 
-        ? 'Write your main instruction here...' 
-        : `Block ${blockCount + 1}: Additional context, examples, format...`;
-    
+
     // Auto-resize textarea
     textarea.addEventListener('input', () => autoResize(textarea));
 
