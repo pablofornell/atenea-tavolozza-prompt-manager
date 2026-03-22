@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Travolozza - Prompt Engineering</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header: Image Context Zone -->
+        <header class="image-zone">
+            <div id="image-list" class="image-list"></div>
+            <button id="add-image-btn" class="add-image-btn" title="Add Images">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <path d="M12 5v14M5 12h14"/>
+                </svg>
+            </button>
+        </header>
+
+        <!-- Main: Prompt Construction Zone -->
+        <main class="prompt-zone">
+            <div id="text-blocks" class="text-blocks"></div>
+            <button id="add-block-btn" class="add-block-btn" title="Add Block">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <path d="M12 5v14M5 12h14"/>
+                </svg>
+            </button>
+        </main>
+
+        <!-- Footer: Action Zone -->
+        <footer class="action-zone">
+            <button id="copy-btn" class="copy-btn">Copy</button>
+        </footer>
+    </div>
+
+    <script type="text/javascript" src="/eel.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
+
